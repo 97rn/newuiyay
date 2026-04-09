@@ -68,7 +68,7 @@ function Library:New(config)
 		Main = IS_MOBILE and Vector2.new(610, 440) or Vector2.new(660, 490),
 		Sidebar = IS_MOBILE and 170 or 185,
 		TopBar = IS_MOBILE and 60 or 65,
-		TabHeight = 20,
+		TabHeight = 32,
 		ItemHeight = IS_MOBILE and 48 or 52,
 		SliderHeight = IS_MOBILE and 54 or 58,
 		BoxHeight = IS_MOBILE and 44 or 48,
@@ -271,8 +271,8 @@ function Library:New(config)
 		ZIndex = 13,
 		Parent = self.Sidebar
 	}, {
-		Create("UIListLayout", {Padding = UDim.new(0, 3)}),
-		Create("UIPadding", {PaddingTop = UDim.new(0, 10), PaddingLeft = UDim.new(0, 10), PaddingRight = UDim.new(0, 10)})
+		Create("UIListLayout", {Padding = UDim.new(0, 5)}),
+		Create("UIPadding", {PaddingTop = UDim.new(0, 8), PaddingLeft = UDim.new(0, 8), PaddingRight = UDim.new(0, 8)})
 	})
 
 	self.Pages = Create("Frame", {
