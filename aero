@@ -63,6 +63,18 @@ function Library:New(config)
 		AccentSoft = Color3.fromRGB(60, 60, 66),
 	}
 
+	local IS_MOBILE = (UIS.TouchEnabled and not UIS.KeyboardEnabled)
+	local SIZES = {
+		Main = IS_MOBILE and Vector2.new(610, 440) or Vector2.new(660, 490),
+		Sidebar = IS_MOBILE and 170 or 185,
+		TopBar = IS_MOBILE and 60 or 65,
+		TabHeight = IS_MOBILE and 38 or 42,
+		ItemHeight = IS_MOBILE and 48 or 52,
+		SliderHeight = IS_MOBILE and 54 or 58,
+		BoxHeight = IS_MOBILE and 44 or 48,
+	}
+	local PageOffset = SIZES.Sidebar + 20
+
 	self = setmetatable({}, Library)
 
 	self.Gui = Create("ScreenGui", {
@@ -73,7 +85,7 @@ function Library:New(config)
 	})
 
 	self.Main = Create("Frame", {
-		Size = UDim2.fromOffset(610, 440),
+		Size = UDim2.fromOffset(SIZES.Main.X, SIZES.Main.Y),
 		Position = UDim2.fromScale(0.5, 0.5),
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		BackgroundColor3 = THEME.MainBg,
@@ -127,7 +139,7 @@ function Library:New(config)
 	})
 
 	self.Top = Create("Frame", {
-		Size = UDim2.new(1, 0, 0, 60),
+		Size = UDim2.new(1, 0, 0, SIZES.TopBar),
 		BackgroundColor3 = THEME.TopBg,
 		ZIndex = 11,
 		Parent = self.Main
@@ -220,8 +232,8 @@ function Library:New(config)
 	end)
 
 	self.Container = Create("Frame", {
-		Size = UDim2.new(1, 0, 1, -60),
-		Position = UDim2.fromOffset(0, 60),
+		Size = UDim2.new(1, 0, 1, -SIZES.TopBar),
+		Position = UDim2.fromOffset(0, SIZES.TopBar),
 		BackgroundTransparency = 1,
 		ClipsDescendants = true,
 		Visible = true,
@@ -230,7 +242,7 @@ function Library:New(config)
 	})
 
 	self.Sidebar = Create("Frame", {
-		Size = UDim2.new(0, 170, 1, -16),
+		Size = UDim2.new(0, SIZES.Sidebar, 1, -16),
 		Position = UDim2.fromOffset(10, 8),
 		BackgroundColor3 = THEME.PanelBg,
 		ZIndex = 11,
@@ -241,7 +253,7 @@ function Library:New(config)
 	})
 
 	self.TabHighlight = Create("Frame", {
-		Size = UDim2.new(1, -16, 0, 38),
+		Size = UDim2.new(1, -16, 0, SIZES.TabHeight),
 		Position = UDim2.fromOffset(8, 8),
 		BackgroundColor3 = THEME.Accent,
 		BackgroundTransparency = 0.82,
@@ -264,8 +276,8 @@ function Library:New(config)
 	})
 
 	self.Pages = Create("Frame", {
-		Size = UDim2.new(1, -200, 1, -16),
-		Position = UDim2.fromOffset(190, 8),
+		Size = UDim2.new(1, -(PageOffset + 10), 1, -16),
+		Position = UDim2.fromOffset(PageOffset, 8),
 		BackgroundTransparency = 1,
 		ZIndex = 11,
 		Parent = self.Container
@@ -394,7 +406,7 @@ function Library:New(config)
 		local Tab = {}
 
 		local TabBg = Create("Frame", {
-			Size = UDim2.new(1, 0, 0, 38),
+			Size = UDim2.new(1, 0, 0, SIZES.TabHeight),
 			BackgroundColor3 = THEME.ItemBg,
 			Parent = UI.TabHolder
 		}, {
@@ -465,7 +477,7 @@ function Library:New(config)
 			local callback = config3.Callback or function() end
 
 			local BtnBg = Create("Frame", {
-				Size = UDim2.new(1, 0, 0, 48),
+				Size = UDim2.new(1, 0, 0, SIZES.ItemHeight),
 				BackgroundColor3 = THEME.ItemBg,
 				Parent = Page
 			}, {
@@ -525,7 +537,7 @@ function Library:New(config)
 			local state = config3.Default or false
 
 			local TglBg = Create("Frame", {
-				Size = UDim2.new(1, 0, 0, 48),
+				Size = UDim2.new(1, 0, 0, SIZES.ItemHeight),
 				BackgroundColor3 = THEME.ItemBg,
 				Parent = Page
 			}, {
@@ -592,7 +604,7 @@ function Library:New(config)
 			local callback = config3.Callback or function() end
 
 			local SliderBg = Create("Frame", {
-				Size = UDim2.new(1, 0, 0, 54),
+				Size = UDim2.new(1, 0, 0, SIZES.SliderHeight),
 				BackgroundColor3 = THEME.ItemBg,
 				Parent = Page
 			}, {
@@ -684,7 +696,7 @@ function Library:New(config)
 			local expanded = false
 
 			local DropdownBg = Create("Frame", {
-				Size = UDim2.new(1, 0, 0, 48),
+				Size = UDim2.new(1, 0, 0, SIZES.ItemHeight),
 				BackgroundColor3 = THEME.ItemBg,
 				ClipsDescendants = true,
 				Parent = Page
@@ -693,7 +705,7 @@ function Library:New(config)
 				Create("UIStroke", {Color = THEME.Stroke, Thickness = 1})
 			})
 
-			local Header = Create("TextButton", {Size = UDim2.new(1, 0, 0, 48), BackgroundTransparency = 1, Text = "", Parent = DropdownBg})
+			local Header = Create("TextButton", {Size = UDim2.new(1, 0, 0, SIZES.ItemHeight), BackgroundTransparency = 1, Text = "", Parent = DropdownBg})
 
 			local TitleLabel = Create("TextLabel", {
 				Text = text,
@@ -720,7 +732,7 @@ function Library:New(config)
 
 			local Content = Create("Frame", {
 				Size = UDim2.new(1, -20, 0, #list * 32),
-				Position = UDim2.fromOffset(10, 48),
+				Position = UDim2.fromOffset(10, SIZES.ItemHeight),
 				BackgroundTransparency = 1,
 				Parent = DropdownBg
 			})
@@ -776,7 +788,7 @@ function Library:New(config)
 
 			Header.MouseButton1Click:Connect(function()
 				expanded = not expanded
-				TweenService:Create(DropdownBg, TweenInfo.new(0.4, Enum.EasingStyle.Quart), {Size = UDim2.new(1, 0, 0, expanded and (48 + #list * 32 + 10) or 48)}):Play()
+				TweenService:Create(DropdownBg, TweenInfo.new(0.4, Enum.EasingStyle.Quart), {Size = UDim2.new(1, 0, 0, expanded and (SIZES.ItemHeight + #list * 32 + 10) or SIZES.ItemHeight)}):Play()
 				TweenService:Create(Arrow, TweenInfo.new(0.4), {Rotation = expanded and 180 or 0}):Play()
 			end)
 		end
@@ -883,7 +895,7 @@ function Library:New(config)
 			local listening = false
 
 			local BindBg = Create("Frame", {
-				Size = UDim2.new(1, 0, 0, 44),
+				Size = UDim2.new(1, 0, 0, SIZES.BoxHeight),
 				BackgroundColor3 = THEME.ItemBg,
 				Parent = Page
 			}, {
@@ -958,7 +970,7 @@ function Library:New(config)
 			local callback = config3.Callback or function() end
 
 			local BoxBg = Create("Frame", {
-				Size = UDim2.new(1, 0, 0, 44),
+				Size = UDim2.new(1, 0, 0, SIZES.BoxHeight),
 				BackgroundColor3 = THEME.ItemBg,
 				Parent = Page
 			}, {
