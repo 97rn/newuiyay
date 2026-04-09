@@ -66,9 +66,9 @@ function Library:New(config)
 	local IS_MOBILE = (UIS.TouchEnabled and not UIS.KeyboardEnabled)
 	local SIZES = {
 		Main = IS_MOBILE and Vector2.new(610, 440) or Vector2.new(660, 490),
-		Sidebar = IS_MOBILE and 170 or 185,
+		Sidebar = IS_MOBILE and 185 or 210,
 		TopBar = IS_MOBILE and 60 or 65,
-		TabHeight = 32,
+		TabHeight = 34,
 		ItemHeight = IS_MOBILE and 48 or 52,
 		SliderHeight = IS_MOBILE and 54 or 58,
 		BoxHeight = IS_MOBILE and 44 or 48,
