@@ -68,7 +68,7 @@ function Library:New(config)
 		Main = IS_MOBILE and Vector2.new(610, 440) or Vector2.new(660, 490),
 		Sidebar = IS_MOBILE and 170 or 185,
 		TopBar = IS_MOBILE and 60 or 65,
-		TabHeight = IS_MOBILE and 30 or 32,
+		TabHeight = IS_MOBILE and 30 or 28,
 		ItemHeight = IS_MOBILE and 48 or 52,
 		SliderHeight = IS_MOBILE and 54 or 58,
 		BoxHeight = IS_MOBILE and 44 or 48,
